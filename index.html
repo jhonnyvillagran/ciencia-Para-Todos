@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquimia Cósmica - Un Blog de Divulgación Científica</title>
+    
+    <!-- Dependencias Externas (Fuentes e Iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS Integrados -->
+    <style>
+        :root {
+            --color-primario: #0d1117;
+            --color-secundario: #161b22;
+            --color-acento: #58a6ff;
+            --color-texto-principal: #c9d1d9;
+            --color-texto-secundario: #8b949e;
+            --fuente-titulos: 'Orbitron', sans-serif;
+            --fuente-cuerpo: 'Roboto', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--fuente-cuerpo); background-color: var(--color-primario); color: var(--color-texto-principal); line-height: 1.6; }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+        .container { max-width: 1200px; margin: auto; padding: 0 2rem; }
+        header { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #30363d; }
+        header .logo h1 a { font-family: var(--fuente-titulos); color: var(--color-acento); text-decoration: none; font-size: 1.8rem; text-shadow: 0 0 10px var(--color-acento); display: flex; align-items: center; }
+        .beaker-icon { margin-right: 15px; font-size: 2.2rem; animation: glow-and-sway 4s ease-in-out infinite; }
+        @keyframes glow-and-sway { 0%, 100% { transform: rotate(-5deg); text-shadow: 0 0 15px var(--color-acento), 0 0 25px var(--color-acento); } 50% { transform: rotate(5deg); text-shadow: 0 0 5px var(--color-acento), 0 0 10px var(--color-acento); } }
+        header nav ul { list-style: none; display: flex; }
+        header nav ul li { margin-left: 2rem; }
+        header nav ul li a { color: var(--color-texto-principal); text-decoration: none; font-size: 1rem; padding: 0.5rem 1rem; border-radius: 5px; transition: background-color 0.3s ease, color 0.3s ease; }
+        header nav ul li a:hover { background-color: var(--color-acento); color: var(--color-primario); text-shadow: none; }
+        #hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 2rem; }
+        .hero-content { max-width: 800px; }
+        .hero-content h2 { font-family: var(--fuente-titulos); font-size: clamp(2.5rem, 10vw, 4rem); margin-bottom: 1rem; color: #fff; text-shadow: 0 0 15px rgba(88, 166, 255, 0.7); }
+        .hero-content p { font-size: 1.2rem; color: var(--color-texto-secundario); }
+        main { padding-top: 80px; }
+        #articulos, #noticias { padding: 4rem 2rem; }
+        #articulos h2, #noticias h2 { font-family: var(--fuente-titulos); font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: var(--color-acento); }
+        .grid-articulos { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .card-articulo { background: var(--color-secundario); border: 1px solid #30363d; border-radius: 10px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .card-articulo:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(88, 166, 255, 0.1); }
+        .card-articulo img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.3s ease; background-color: #0d1117; }
+        .card-articulo:hover img { transform: scale(1.05); }
+        .contenido-articulo { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .contenido-articulo h3 { font-family: var(--fuente-titulos); font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-acento); }
+        .contenido-articulo > p { color: var(--color-texto-secundario); flex-grow: 1; margin-bottom: 1.5rem; }
+        .leer-mas-btn { background: var(--color-acento); color: var(--color-primario); border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; font-family: var(--fuente-cuerpo); font-weight: bold; align-self: flex-start; margin-top: auto; transition: background-color 0.3s ease; }
+        .leer-mas-btn:hover { background: #79c0ff; }
+        .contenido-completo { max-height: 0; overflow: hidden; transition: max-height 0.8s ease-out; }
+        .contenido-completo p { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #30363d; color: var(--color-texto-secundario); }
+        .contenido-completo.open { max-height: 1500px; }
+        #noticias { padding-top: 2rem; padding-bottom: 4rem; }
+        .noticias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .noticia-card { background: var(--color-secundario); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--color-acento); transition: background-color 0.3s; display: flex; flex-direction: column; }
+        .noticia-card:hover { background-color: #21262d; }
+        .noticia-card h4 { font-family: var(--fuente-titulos); font-size: 1.2rem; color: var(--color-acento); margin-bottom: 0.5rem; }
+        .noticia-card p { color: var(--color-texto-secundario); font-size: 0.9rem; flex-grow: 1; }
+        footer { background: var(--color-primario); text-align: center; padding: 2rem 0; margin-top: 2rem; border-top: 1px solid #30363d; }
+        footer p { color: var(--color-texto-secundario); font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            header { padding: 1rem; flex-direction: column; gap: 1rem; }
+            header nav ul { flex-direction: column; gap: 0.5rem; }
+            header nav ul li { margin-left: 0; }
+            .container { padding: 0 1rem; }
+            #articulos, #noticias { padding: 2rem 1rem; }
+            .grid-articulos { grid-template-columns: 1fr; }
+            .noticias-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="logo">
+            <h1><a href="#"><span class="beaker-icon"><i class="fas fa-flask"></i></span>Alquimia Cósmica</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#articulos">Artículos</a></li>
+                <li><a href="#noticias">Noticias 2025</a></li>
+                <li><a href="#acerca-de">Acerca de</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h2>Explorando los Secretos del Universo</h2>
+                <p>Un viaje a través de la ciencia, la tecnología y los misterios del cosmos.</p>
+            </div>
+        </section>
+
+        <section id="articulos" class="container">
+            <h2>Artículos Destacados</h2>
+            <div class="grid-articulos">
+                <article class="card-articulo">
+                    <img src="./images/entrelazamiento_cuantico.jpg" alt="Entrelazamiento cuántico - Visualización artística de partículas entrelazadas">
+                    <div class="contenido-articulo">
+                        <h3>El Enigmático Baile del Entrelazamiento Cuántico</h3>
+                        <p>Sumérgete en uno de los fenómenos más extraños de la física cuántica...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>El entrelazamiento cuántico...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/interfaces_cerebro_computadora.png" alt="Interfaces Cerebro-Computadora">
+                    <div class="contenido-articulo">
+                        <h3>La Frontera de la Mente: Interfaces Cerebro-Computadora</h3>
+                        <p>Exploramos cómo las BCI están abriendo nuevas vías...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>Las interfaces cerebro-computadora (BCI)...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/materia_oscura.jpg" alt="Materia Oscura">
+                    <div class="contenido-articulo">
+                        <h3>El Fantasma del Cosmos: En Busca de la Materia Oscura</h3>
+                        <p>El 85% de la materia del universo es invisible...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>La materia oscura es el andamiaje invisible...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/crispr.jpg" alt="CRISPR - Tecnología de edición genética">
+                    <div class="contenido-articulo">
+                        <h3>CRISPR: Reescribiendo el Código de la Vida</h3>
+                        <p>La tecnología de edición genética CRISPR está revolucionando...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>CRISPR-Cas9 es un sistema inmune bacteriano...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/discos_protoplanetarios.jpg" alt="Disco protoplanetario">
+                    <div class="contenido-articulo">
+                        <h3>Fábricas de Planetas: Secretos de los Discos Protoplanetarios</h3>
+                        <p>El telescopio James Webb nos ofrece una visión sin precedentes...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>Los discos protoplanetarios son cunas...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/fusion_nuclear.jpg" alt="Reactor de fusión nuclear">
+                    <div class="contenido-articulo">
+                        <h3>La Energía de las Estrellas: ¿Está Cerca la Fusión Nuclear?</h3>
+                        <p>La promesa de una energía limpia e ilimitada avanza...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>La fusión nuclear busca replicar el proceso del Sol...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/ondas_gravitacionales.jpeg" alt="Ondas gravitacionales">
+                    <div class="contenido-articulo">
+                        <h3>Ecos del Cosmos: Escuchando las Ondas Gravitacionales</h3>
+                        <p>Hemos abierto un nuevo sentido para percibir el universo...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>Predichas por Einstein hace un siglo...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/microbioma_humano.jpg" alt="Microbioma humano">
+                    <div class="contenido-articulo">
+                        <h3>Nuestro Universo Interior: El Secreto del Microbioma</h3>
+                        <p>No estamos solos. Billones de microorganismos habitan...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>El microbioma humano es el ecosistema...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/ia_medicina.jpg" alt="IA en medicina">
+                    <div class="contenido-articulo">
+                        <h3>La Revolución Silenciosa de la IA en la Medicina</h3>
+                        <p>La inteligencia artificial está acelerando el descubrimiento...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>Descubrir un nuevo medicamento es un proceso...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/astrobiologia.jpg" alt="Astrobiología">
+                    <div class="contenido-articulo">
+                        <h3>En Busca de Vida Extraterrestre: La Ciencia de la Astrobiología</h3>
+                        <p>Exploramos cómo los científicos están buscando vida...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>La astrobiología es la ciencia que estudia...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/computacion_cuantica.jpg" alt="Computación cuántica">
+                    <div class="contenido-articulo">
+                        <h3>La Supremacía Cuántica: El Futuro de la Computación</h3>
+                        <p>Las computadoras cuánticas prometen resolver problemas...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>La computación cuántica se basa en los principios...</p></div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/inteligencia_artificial_general.jpg" alt="Inteligencia Artificial General">
+                    <div class="contenido-articulo">
+                        <h3>El Amanecer de la AGI: ¿Estamos Creando a Nuestro Sucesor?</h3>
+                        <p>La búsqueda de la Inteligencia Artificial General (AGI)...</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo"><p>A diferencia de la IA 'estrecha' actual...</p></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- El resto del contenido (sección de noticias, footer, scripts) sigue igual -->
+
+    </main>
+
+    <!-- ... (El resto del HTML va aquí, no necesita cambios) ... -->
+
+</body>
+</html>
