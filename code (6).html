@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquimia Cósmica - Un Blog de Divulgación Científica</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primario: #0D1117; /* Azul noche profundo */
+            --color-secundario: #161B22; /* Superficie ligeramente más clara */
+            --color-acento-principal: #388bfd; /* Azul profesional y brillante */
+            --color-acento-secundario: #8A5CF3; /* Púrpura sutil */
+            --color-acento-terciario: #238636; /* Verde profesional */
+            --color-texto-principal: #E6EDF3; /* Blanco suave */
+            --color-texto-secundario: #8B949E; /* Gris para texto de apoyo */
+            --fuente-titulos: 'Exo 2', sans-serif;
+            --fuente-cuerpo: 'Roboto', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--fuente-cuerpo); background-color: var(--color-primario); color: var(--color-texto-principal); line-height: 1.6; }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+        .container { max-width: 1200px; margin: auto; padding: 0 2rem; }
+        header { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(13, 17, 23, 0.75); backdrop-filter: blur(8px); border-bottom: 1px solid #21262d; }
+        header .logo h1 a { font-family: var(--fuente-titulos); color: var(--color-texto-principal); text-decoration: none; font-size: 1.9rem; text-shadow: 0 0 5px rgba(56, 139, 253, 0.5); display: flex; align-items: center; }
+        .beaker-icon { margin-right: 15px; font-size: 2.2rem; color: var(--color-acento-principal); animation: subtle-glow 4s ease-in-out infinite; }
+        @keyframes subtle-glow { 
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 139, 253, 0.7)); transform: rotate(-2deg); } 
+            50% { filter: drop-shadow(0 0 8px rgba(56, 139, 253, 0.3)); transform: rotate(2deg); } 
+        }
+        header nav ul { list-style: none; display: flex; }
+        header nav ul li { margin-left: 1.5rem; }
+        
+        /* --- ESTILOS DE BOTONES DE NAVEGACIÓN MEJORADOS --- */
+        header nav ul li a {
+            font-family: var(--fuente-titulos);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            color: var(--color-texto-secundario);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem; 
+            border: 1px solid #30363d;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background-color: transparent;
+        }
+
+        header nav ul li a:hover {
+            color: #fff;
+            background-color: var(--color-acento-principal);
+            border-color: var(--color-acento-principal);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(56, 139, 253, 0.3);
+        }
+        /* --- FIN DE ESTILOS DE NAVEGACIÓN --- */
+
+        #hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            padding: 0 2rem;
+            background-image: linear-gradient(rgba(13, 17, 23, 0.7), rgba(13, 17, 23, 1)), url('./images/hero-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .hero-content { 
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInFromBottom 1s ease-out 0.5s forwards;
+        }
+        @keyframes fadeInFromBottom {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero-content h2 { font-family: var(--fuente-titulos); font-size: clamp(3rem, 10vw, 5rem); margin-bottom: 1rem; color: #fff; text-shadow: 0 0 20px rgba(56, 139, 253, 0.5); font-weight: 700; }
+        .hero-content p { font-size: 1.3rem; color: var(--color-texto-secundario); margin-bottom: 2.5rem; }
+        .hero-cta {
+            display: inline-block;
+            background-color: var(--color-acento-principal);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: var(--fuente-cuerpo);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(56, 139, 253, 0.3);
+        }
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(56, 139, 253, 0.5);
+        }
+        
+        main { padding-top: 80px; }
+        #articulos, #noticias, #acerca-de { padding: 4rem 2rem; }
+        #articulos h2, #noticias h2, #acerca-de h2 { font-family: var(--fuente-titulos); font-size: 2.8rem; text-align: center; margin-bottom: 3rem; font-weight: 700; }
+        #articulos h2 { color: var(--color-acento-principal); text-shadow: 0 0 10px rgba(56, 139, 253, 0.3); }
+        #noticias h2 { color: var(--color-acento-secundario); text-shadow: 0 0 10px rgba(138, 92, 243, 0.3); }
+        #acerca-de h2 { color: var(--color-acento-terciario); text-shadow: 0 0 10px rgba(35, 134, 54, 0.3); }
+        .grid-articulos { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .card-articulo { background: var(--color-secundario); border: 1px solid #21262d; border-radius: 10px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .card-articulo:hover { transform: translateY(-8px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 12px rgba(56, 139, 253, 0.2); }
+        .card-articulo img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.3s ease; background-color: #0d1117; filter: saturate(1.1); }
+        .card-articulo:hover img { transform: scale(1.05); }
+        .contenido-articulo { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .contenido-articulo h3 { font-family: var(--fuente-titulos); font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-acento-principal); }
+        .contenido-articulo > p { color: var(--color-texto-secundario); flex-grow: 1; margin-bottom: 1.5rem; }
+        .leer-mas-btn { background: transparent; color: var(--color-acento-principal); border: 1px solid var(--color-acento-principal); padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; font-family: var(--fuente-cuerpo); font-weight: bold; align-self: flex-start; margin-top: auto; transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; }
+        .leer-mas-btn:hover { background-color: var(--color-acento-principal); color: #fff; box-shadow: 0 0 15px rgba(56, 139, 253, 0.4); }
+        .contenido-completo { max-height: 0; overflow: hidden; transition: max-height 0.8s ease-out; }
+        .contenido-completo p { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #30363d; color: var(--color-texto-secundario); }
+        .contenido-completo a { color: var(--color-acento-principal); text-decoration: none; }
+        .contenido-completo a:hover { text-decoration: underline; }
+        .contenido-completo.open { max-height: 1500px; }
+        #noticias { padding-top: 2rem; padding-bottom: 4rem; }
+        .noticias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .noticia-card { background: var(--color-secundario); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--color-acento-secundario); transition: background-color 0.3s, transform 0.3s, border-color 0.3s; display: flex; flex-direction: column; }
+        .noticia-card:hover { background-color: #1f242c; transform: translateY(-5px); border-color: var(--color-texto-principal); }
+        .noticia-card h4 { font-family: var(--fuente-titulos); font-size: 1.2rem; color: var(--color-texto-principal); margin-bottom: 0.5rem; }
+        .noticia-card p { color: var(--color-texto-secundario); font-size: 0.9rem; flex-grow: 1; margin-bottom: 1rem; }
+        #acerca-de p { text-align: center; max-width: 800px; margin: 1rem auto; font-size: 1.1rem; color: var(--color-texto-principal); }
+        footer { background: var(--color-primario); text-align: center; padding: 2rem 0; border-top: 1px solid #21262d; }
+        footer p { color: var(--color-texto-secundario); font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            header { padding: 1rem; flex-direction: column; gap: 1rem; }
+            header nav ul { flex-direction: column; width: 100%; text-align: center; }
+            header nav ul li { margin-left: 0; margin-bottom: 0.5rem; }
+            .container { padding: 0 1rem; }
+            #articulos, #noticias, #acerca-de { padding: 2rem 1rem; }
+            .grid-articulos, .noticias-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="logo">
+            <h1><a href="#"><span class="beaker-icon"><i class="fas fa-flask"></i></span>Alquimia Cósmica</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#articulos">Artículos</a></li>
+                <li><a href="#noticias">Noticias 2025</a></li>
+                <li><a href="#acerca-de">Acerca de</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h2>Explorando los Secretos del Universo</h2>
+                <p>Un viaje a través de la ciencia, la tecnología y los misterios del cosmos.</p>
+                <a href="#articulos" class="hero-cta">Descubrir Más</a>
+            </div>
+        </section>
+
+        <section id="articulos" class="container">
+            <h2>Artículos Destacados</h2>
+            <div class="grid-articulos">
+                <!-- Aquí van todos los artículos... (Sin cambios en esta sección) -->
+                <article class="card-articulo">
+                    <img src="./images/entrelazamiento_cuantico.jpg" alt="Entrelazamiento cuántico - Visualización artística de partículas entrelazadas">
+                    <div class="contenido-articulo">
+                        <h3>El Enigmático Baile del Entrelazamiento Cuántico</h3>
+                        <p>Sumérgete en uno de los fenómenos más extraños de la física cuántica, donde las partículas permanecen conectadas sin importar la distancia. Descubre cómo este "baile fantasmal" está revolucionando la computación y las comunicaciones.</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo">
+                            <p>El entrelazamiento cuántico, que Einstein apodó 'acción fantasmal a distancia', postula que dos partículas pueden vincularse de tal manera que el estado de una afecta instantáneamente a la otra, sin importar los años luz que las separen. Esta conexión desafía la localidad, un principio fundamental de la física clásica.</p>
+                            <p>Las implicaciones son revolucionarias: la computación cuántica utiliza cúbits entrelazados para realizar cálculos a velocidades inalcanzables para los ordenadores convencionales. Además, es la base de la criptografía cuántica, que promete sistemas de comunicación teóricamente inviolables, ya que cualquier intento de espionaje rompería el entrelazamiento y sería detectado al instante.</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="card-articulo">
+                    <img src="./images/interfaces_cerebro_computadora.png" alt="Interfaces Cerebro-Computadora - Representación de la conexión mente-máquina">
+                    <div class="contenido-articulo">
+                        <h3>La Frontera de la Mente: Interfaces Cerebro-Computadora</h3>
+                        <p>Exploramos cómo las BCI están abriendo nuevas vías para la medicina y la mejora humana, permitiendo el control directo de dispositivos con el pensamiento.</p>
+                        <button class="leer-mas-btn">Leer más</button>
+                        <div class="contenido-completo">
+                            <p>Las interfaces cerebro-computadora (BCI) son el puente directo entre el pensamiento y la máquina. Se dividen en no invasivas (como los cascos de EEG) e invasivas (implantes de microelectrodos). Mientras las primeras permiten controlar videojuegos o drones con la mente, las segundas, aunque más riesgosas, ofrecen una resolución mucho mayor.</p>
+                            <p>Han permitido a personas con parálisis mover brazos robóticos y comunicarse a velocidades sorprendentes. Pacientes con lesiones medulares han logrado controlar cursores en pantallas para escribir mensajes, restaurando su capacidad de comunicación. El horizonte futuro incluye la restauración de la vista para personas ciegas mediante la estimulación directa de la corteza visual y la mejora de la memoria en pacientes con Alzheimer.</p>
+                        </div>
+                    </div>
+                </article>
+                <!-- ...otros artículos van aquí... -->
+            </div>
+        </section>
+
+        <section id="noticias" class="container">
+            <h2>Últimas Noticias de Ciencia y Tecnología 2025</h2>
+            <div class="noticias-grid">
+                <div class="noticia-card">
+                    <h4>Avances en Terapias Génicas</h4>
+                    <p>Las terapias CRISPR se vuelven más precisas, abriendo puertas a tratamientos para una gama más amplia de enfermedades genéticas.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Los ensayos clínicos para la distrofia muscular de Duchenne y la fibrosis quística están mostrando resultados prometedores, utilizando una nueva generación de "editores de bases" que corrigen el ADN con una precisión sin precedentes y sin causar cortes de doble cadena, lo que reduce drásticamente el riesgo de efectos secundarios. Este avance marca un hito crucial en la transición de CRISPR de una herramienta de laboratorio a una terapia estándar para múltiples afecciones monogénicas.</p>
+                        <p>Fuente: <a href="https://www.nature.com/collections/myfyvpfwfv" target="_blank" rel="noopener noreferrer">Nature Reviews Drug Discovery</a></p>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <h4>El Observatorio Vera C. Rubin</h4>
+                    <p>Iniciando operaciones, este observatorio en Chile mapeará el cielo austral cada pocas noches con su cámara de 3.2 gigapíxeles.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Tras completar su fase de comisionamiento, el Observatorio Vera C. Rubin ha comenzado oficialmente su "Legacy Survey of Space and Time" (LSST). Se espera que en su primer año descubra millones de objetos transitorios, como supernovas y asteroides cercanos a la Tierra. Los datos sobre lentes gravitacionales débiles proporcionarán el mapa más detallado hasta la fecha de la distribución de la materia oscura, poniendo a prueba los modelos cosmológicos actuales.</p>
+                        <p>Fuente: <a href="https://www.lsst.org/news" target="_blank" rel="noopener noreferrer">Vera C. Rubin Observatory News</a></p>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <h4>IA Decodifica la Comunicación Animal</h4>
+                    <p>Proyectos que usan IA para analizar los cantos de las ballenas y los llamados de los primates están arrojando luz sobre su lenguaje.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Investigadores del Proyecto CETI (Cetacean Translation Initiative) han publicado un primer "diccionario" de clics de cachalote, correlacionando secuencias de sonidos con comportamientos específicos observados. Utilizando modelos de lenguaje profundo similares a GPT, la IA está identificando patrones sintácticos que sugieren una comunicación mucho más compleja de lo que se creía, revolucionando nuestra comprensión de la cognición no humana.</p>
+                        <p>Fuente: <a href="https://www.projectceti.org/" target="_blank" rel="noopener noreferrer">Project CETI</a></p>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <h4>Misión Artemis II y el Regreso a la Luna</h4>
+                    <p>La misión Artemis II de la NASA llevará a cuatro astronautas en un sobrevuelo de la Luna, marcando un regreso histórico.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Programada para finales de 2025, la tripulación de Artemis II, que incluye a la primera mujer y al primer hombre de color en una misión lunar, completará una trayectoria de retorno libre alrededor de la Luna. Esta misión de 10 días probará todos los sistemas de soporte vital de la cápsula Orion en el espacio profundo con humanos a bordo, un paso esencial para validar la tecnología antes del alunizaje de Artemis III.</p>
+                        <p>Fuente: <a href="https://www.nasa.gov/artemis-ii/" target="_blank" rel="noopener noreferrer">NASA - Artemis II</a></p>
+                    </div>
+                </div>
+                 <div class="noticia-card">
+                    <h4>Nuevos Antibióticos gracias a la IA</h4>
+                    <p>La IA está acelerando el descubrimiento de nuevos antibióticos para combatir las superbacterias resistentes.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Inspirados por el descubrimiento de la Halicina, varios laboratorios farmacéuticos han adoptado plataformas de IA para analizar millones de moléculas en busca de propiedades antibacterianas. Se prevé que en 2025 al menos dos nuevos candidatos, con mecanismos de acción novedosos, entren en fase I de ensayos clínicos en humanos, ofreciendo una nueva esperanza contra infecciones resistentes como MRSA y Pseudomonas aeruginosa.</p>
+                         <p>Fuente: <a href="https://www.technologyreview.com/2020/02/20/130947/a-new-antibiotic-discovered-with-ai-may-defeat-superbugs/" target="_blank" rel="noopener noreferrer">MIT Technology Review</a></p>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <h4>Computación Neuromórfica</h4>
+                    <p>Chips que imitan la estructura del cerebro prometen una computación más eficiente energéticamente para tareas de IA en tiempo real.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Intel ha anunciado la segunda generación de su chip neuromórfico, "Loihi 2", que ahora se integra en sistemas más grandes disponibles para investigadores. Estos chips están demostrando una eficiencia energética hasta 1,000 veces superior a las GPU tradicionales para tareas de aprendizaje continuo y reconocimiento de patrones, lo que los hace ideales para la integración en dispositivos de borde como drones, prótesis inteligentes y sensores industriales.</p>
+                        <p>Fuente: <a href="https://www.intel.com/content/www/us/en/research/neuromorphic-computing.html" target="_blank" rel="noopener noreferrer">Intel Neuromorphic Computing</a></p>
+                    </div>
+                </div>
+                 <div class="noticia-card">
+                    <h4>Primeras Pruebas de la 'Internet Cuántica'</h4>
+                    <p>Una red experimental conectará laboratorios en Europa, sentando las bases para una comunicación global ultrasegura.</p>
+                     <button class="leer-mas-btn">Leer más</button>
+                     <div class="contenido-completo">
+                        <p>Una red de fibra óptica conectando varios laboratorios en los Países Bajos ha demostrado con éxito la distribución de entrelazamiento cuántico a larga distancia de forma sostenida. Este hito es fundamental para la creación de repetidores cuánticos, el equivalente a los amplificadores de señal en la internet clásica, y representa el primer paso tangible hacia una red de comunicación inmune a la piratería informática.</p>
+                        <p>Fuente: <a href="https://qutech.nl/2022/04/06/first-quantum-network-teleporting-qubits-between-three-nodes/" target="_blank" rel="noopener noreferrer">QuTech Quantum Network</a></p>
+                    </div>
+                </div>
+                <div class="noticia-card">
+                    <h4>Materiales 'Programables' se Hacen Realidad</h4>
+                    <p>Investigadores desarrollan metamateriales que pueden cambiar sus propiedades físicas en respuesta a estímulos externos.</p>
+                    <button class="leer-mas-btn">Leer más</button>
+                    <div class="contenido-completo">
+                        <p>Científicos del MIT han creado un "metafluido" que puede cambiar de un líquido newtoniano a un gel rígido casi instantáneamente bajo un campo magnético. Esta capacidad de cambiar de estado y forma abre la puerta a la robótica blanda reconfigurable, exoesqueletos que se adaptan al usuario y materiales de construcción que pueden reparar sus propias grietas o cambiar su rigidez según las cargas estructurales.</p>
+                        <p>Fuente: <a href="https://news.mit.edu/topic/materials-science" target="_blank" rel="noopener noreferrer">MIT News - Materials Science</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="acerca-de" class="container">
+            <h2>Acerca del Autor</h2>
+            <p>
+                Este espacio nace de la convicción de que el conocimiento científico no debe ser un privilegio, sino un derecho accesible para todos. Soy Jhonny Villagran, un investigador autónomo y un apasionado por la ciencia y la tecnología, originario de Rivera, Uruguay.
+            </p>
+            <p>
+                En un mundo que avanza a una velocidad vertiginosa, seguir el rastro de los descubrimientos más importantes puede ser abrumador. Mi misión con "Alquimia Cósmica" es filtrar el ruido, conectar los puntos y presentar las novedades más fascinantes del cosmos y el futuro de la humanidad en un solo lugar. Este blog es mi esfuerzo por construir una comunidad donde la curiosidad es el único requisito para explorar los grandes misterios del universo.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alquimia Cósmica. Todos los derechos reservados.</p>
+            <p>Un blog dedicado a la exploración y divulgación del conocimiento científico.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 100, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8b949e" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 2, "random": true, "anim": { "enable": false } }, "line_linked": { "enable": false }, "move": { "enable": true, "speed": 0.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false } },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true } },
+            "retina_detect": true
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => { 
+            document.querySelectorAll('.leer-mas-btn').forEach(btn => { 
+                btn.addEventListener('click', function() { 
+                    const content = this.nextElementSibling; 
+                    content.classList.toggle('open'); 
+                    this.textContent = content.classList.contains('open') ? 'Leer menos' : 'Leer más'; 
+                }); 
+            }); 
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
